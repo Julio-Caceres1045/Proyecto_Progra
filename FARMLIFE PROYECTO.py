@@ -270,3 +270,139 @@ def login():
 
                     if __name__ == "__main__":
                         main()
+                elif opcion == '2':
+                    class Animal:
+                        def __init__(self, nombre, salud_maxima, hambre_maxima, felicidad_maxima, produccion):
+                            self.nombre = nombre
+                            self.salud = salud_maxima
+                            self.hambre = hambre_maxima
+                            self.felicidad = felicidad_maxima
+                            self.produccion = produccion
+                            self.leche = 0
+                            self.huevos = 0
+                            self.lana = 0
+            
+                        def alimentar(self):
+                            if comida_disponible[self.nombre] > 0:
+                                comida_disponible[self.nombre] -= 1
+                                self.hambre -= 10
+                                self.salud += 5
+                                self.felicidad += 5
+                                print(f"Se ha alimentado a {self.nombre}")
+                            else:
+                                print(f"No tienes suficiente comida para {self.nombre}.")
+            
+                        def acariciar(self):
+                            self.felicidad += 10
+                            print(f"Se ha acariciado a {self.nombre}")
+            
+                        def limpiar(self):
+                            self.salud += 10
+                            print(f"Se ha limpiado a {self.nombre}")
+            
+                        def enfermar(self):
+                            self.salud -= random.randint(5, 15)
+            
+                        def recolectar_leche(self):
+                            if self.nombre in ["Vaca"]:
+                                self.leche += 1
+                                print(f"Has recolectado leche de {self.nombre}.")
+                            else:
+                                print(f"{self.nombre} no produce leche.")
+            
+                        def recolectar_huevos(self):
+                            if self.nombre in ["Gallina"]:
+                                self.huevos += 1
+                                print(f"Has recolectado huevos de {self.nombre}.")
+                            else:
+                                print(f"{self.nombre} no pone huevos.")
+            
+                        def recolectar_lana(self):
+                            if self.nombre in ["Oveja"]:
+                                self.lana += 1
+                                print(f"Has recolectado lana de {self.nombre}.")
+                            else:
+                                print(f"{self.nombre} no produce lana.")
+            
+                    def comprar_comida():
+                        print("\n----- Comprar Comida -----")
+                        print("1. Comida para Vaca")
+                        print("2. Comida para Oveja")
+                        print("3. Comida para Gallina")
+                        opcion = input("Elige el tipo de comida que deseas comprar (1/2/3) o 'q' para salir: ")
+                        if opcion == 'q':
+                            return
+                        elif opcion.isdigit():
+                            indice_comida = int(opcion) - 1
+                            tipos_comida = list(comida_disponible.keys())
+                            if 0 <= indice_comida < len(tipos_comida):
+                                comida_disponible[tipos_comida[indice_comida]] += 1
+                                print(f"Has comprado comida para {tipos_comida[indice_comida]}.")
+            
+                    def seleccionar_animal():
+                        print("\n----- Seleccionar Animal -----")
+                        for i, animal in enumerate(animales):
+                            print(f"{i + 1}. {animal.nombre}")
+            
+                        opcion = input("Elige un animal con el que interactuar (1/2/3) o 'q' para salir: ")
+                        if opcion == 'q':
+                            return None
+                        elif opcion.isdigit():
+                            indice_animal = int(opcion) - 1
+                            if 0 <= indice_animal < len(animales):
+                                return animales[indice_animal]
+                        return None
+            
+                    if __name__ == "__main__":
+                        comida_disponible = {"Vaca": 5, "Oveja": 5, "Gallina": 5}  
+            
+                        
+                        animales = [Animal("Vaca", 100, 50, 70, 10),
+                                    Animal("Oveja", 80, 40, 60, 5),
+                                    Animal("Gallina", 60, 30, 50, 2)]
+            
+                        while True:
+                            print("\n----- Granja de Animales -----")
+                            animal_seleccionado = seleccionar_animal()
+                            if animal_seleccionado is None:
+                                break
+            
+                            print(f"{animal_seleccionado.nombre} - Salud: {animal_seleccionado.salud}, Hambre: {animal_seleccionado.hambre}, Felicidad: {animal_seleccionado.felicidad}")
+            
+                            print("\nInventario de Comida:")
+                            for nombre, cantidad in comida_disponible.items():
+                                print(f"{nombre}: {cantidad}")
+            
+                        
+                            accion = input("\nElige una acción: "
+                                        "1. Alimentar, 2. Acariciar, 3. Limpiar, 4. Recolectar recursos, 5. Comprar comida, 'q' para cambiar de animal: ")
+            
+                            if accion == 'q':
+                                continue
+                            elif accion.isdigit():
+                                accion = int(accion)
+                                if 1 <= accion <= 5:
+                                    if accion == 1:
+                                        animal_seleccionado.alimentar()
+                                    elif accion == 2:
+                                        animal_seleccionado.acariciar()
+                                    elif accion == 3:
+                                        animal_seleccionado.limpiar()
+                                    elif accion == 4:
+                                        animal_seleccionado.recolectar_leche()
+                                        animal_seleccionado.recolectar_huevos()
+                                        animal_seleccionado.recolectar_lana()
+                                    elif accion == 5:
+                                        comprar_comida()
+            
+                                    
+                                    animal_seleccionado.hambre += 10
+                                    if animal_seleccionado.hambre >= 80:
+                                        animal_seleccionado.enfermar()
+                                        print(f"{animal_seleccionado.nombre} está hambriento y se ha enfermado!")
+            
+                                    
+                                    if animal_seleccionado.salud <= 0:
+                                        print(f"{animal_seleccionado.nombre} ha muerto.")
+                                        animales.remove(animal_seleccionado)
+                            
