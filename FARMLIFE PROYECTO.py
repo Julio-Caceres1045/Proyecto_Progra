@@ -159,26 +159,31 @@ while True:
                         cultivo = jugador.plantar_cultivo(cultivo_tomate, cantidad)
                         if cultivo:
                             cultivos.append(cultivo)
+                            print(f"Se plantaron {cantidad} semillas de Tomate")
                     elif eleccion_cultivo == "2":
                         cantidad = int(input("Cantidad de zanahorias para plantar: "))
                         cultivo = jugador.plantar_cultivo(cultivo_zanahoria, cantidad)
                         if cultivo:
                             cultivos.append(cultivo)
+                            print(f"Se plantaron {cantidad} semillas de Zanahoria")
                     elif eleccion_cultivo == "3":
                         cantidad = int(input("Cantidad de maíz para plantar: "))
                         cultivo = jugador.plantar_cultivo(cultivo_maiz, cantidad)
                         if cultivo:
                             cultivos.append(cultivo)
+                            print(f"Se plantaron {cantidad} semillas de Maiz")
                     elif eleccion_cultivo == "4":
                         cantidad = int(input("Cantidad de papas para plantar: "))
                         cultivo = jugador.plantar_cultivo(cultivo_papa, cantidad)
                         if cultivo:
                             cultivos.append(cultivo)
+                            print(f"Se plantaron {cantidad} semillas de Papa")
                     elif eleccion_cultivo == "5":
                         cantidad = int(input("Cantidad de lechugas para plantar: "))
                         cultivo = jugador.plantar_cultivo(cultivo_lechuga, cantidad)
                         if cultivo:
                             cultivos.append(cultivo)
+                            print(f"Se plantaron {cantidad} semillas de Lechuga")
                     else:
                         print("Opción inválida.")
 
