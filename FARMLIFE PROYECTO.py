@@ -509,5 +509,188 @@ def login():
                     if __name__ == "__main__":
                         juego = JuegoCalendario()
                         juego.planificar_actividades()
+                        
+                elif opcion == '4':
+                    import random
+
+                    class Moneda:
+                        def __init__(self):
+                            self.valor = 1000
+
+                        def agregar_dinero(self, cantidad):
+                            self.valor += cantidad
+
+                        def restar_dinero(self, cantidad):
+                            if self.valor >= cantidad:
+                                self.valor -= cantidad
+                                return True
+                            else:
+                                print("No tienes suficiente dinero.")
+                                return False
+
+                    class ProductoAgricola:
+                        def __init__(self, nombre, precio_venta):
+                            self.nombre = nombre
+                            self.precio_venta = precio_venta
+                            self.cantidad = 0
+
+                        def comprar(self, cantidad, moneda):
+                            costo_total = self.precio_venta * cantidad
+                            if moneda.restar_dinero(costo_total):
+                                self.cantidad += cantidad
+                                print(f"Has comprado {cantidad} unidades de {self.nombre}.")
+                            else:
+                                print(f"No tienes suficiente dinero para comprar {self.nombre}.")
+
+                        def vender(self, cantidad, moneda):
+                            if self.cantidad >= cantidad:
+                                ingreso_total = self.precio_venta * cantidad
+                                moneda.agregar_dinero(ingreso_total)
+                                self.cantidad -= cantidad
+                                print(f"Has vendido {cantidad} unidades de {self.nombre} por {ingreso_total} monedas.")
+                            else:
+                                print(f"No tienes suficientes unidades de {self.nombre} para vender.")
+
+                    class MejoraGranja:
+                        def __init__(self, nombre, costo, aumento_produccion):
+                            self.nombre = nombre
+                            self.costo = costo
+                            self.aumento_produccion = aumento_produccion
+                            self.comprada = False
+
+                        def comprar(self, moneda):
+                            if not self.comprada:
+                                if moneda.restar_dinero(self.costo):
+                                    self.comprada = True
+                                    print(f"Has comprado la mejora '{self.nombre}' por {self.costo} monedas.")
+                                else:
+                                    print(f"No tienes suficiente dinero para comprar la mejora '{self.nombre}'.")
+                            else:
+                                print(f"Ya has comprado la mejora '{self.nombre}' previamente.")
+
+                    class Jugador:
+                        def __init__(self):
+                            self.moneda = Moneda()
+                            self.productos_agricolas = {
+                                "Tomate": ProductoAgricola("Tomate", 20),
+                                "Maíz": ProductoAgricola("Maíz", 15),
+                                "Papa": ProductoAgricola("Papa", 25),
+                                "Zanahoria": ProductoAgricola("Zanahoria", 18),
+                                "Lechuga": ProductoAgricola("Lechuga", 22),
+                                "Leche": ProductoAgricola("Leche", 8),
+                                "Huevos": ProductoAgricola("Huevos", 12),
+                                "Lana": ProductoAgricola("Lana", 10)
+                            }
+                            self.mejoras_granja = [
+                                MejoraGranja("Riego automático", 100, 0.2),  
+                                MejoraGranja("Fertilizante avanzado", 150, 0.3)  
+                            ]
+
+                        def comprar_producto(self, nombre_producto, cantidad):
+                            if nombre_producto in self.productos_agricolas:
+                                self.productos_agricolas[nombre_producto].comprar(cantidad, self.moneda)
+
+                        def vender_producto(self, nombre_producto, cantidad):
+                            if nombre_producto in self.productos_agricolas:
+                                self.productos_agricolas[nombre_producto].vender(cantidad, self.moneda)
+
+                        def comprar_mejora(self, nombre_mejora):
+                            for mejora in self.mejoras_granja:
+                                if mejora.nombre == nombre_mejora:
+                                    mejora.comprar(self.moneda)
+
+                    def mostrar_inventario_jugador(jugador):
+                        print("\nInventario del jugador:")
+                        for producto, info_producto in jugador.productos_agricolas.items():
+                            print(f"{producto}: {info_producto.cantidad} unidades")
+                        print(f"Dinero: {jugador.moneda.valor} monedas")
+
+                    def mostrar_opciones_mercado(productos_agricolas, jugador):
+                        while True:
+                            print("\n----- Mercado de la Granja -----")
+                            print("Productos disponibles:")
+                            for i, (nombre, info_producto) in enumerate(productos_agricolas.items(), start=1):
+                                print(f"{i}. {nombre} - Precio: {info_producto.precio_venta} monedas")
+
+                            print("M. Volver al menú principal")
+                            opcion = input("Selecciona un producto para comprar (1-M): ")
+
+                            if opcion == "M" or opcion == "m":
+                                break
+                            elif opcion.isdigit() and 1 <= int(opcion) <= len(productos_agricolas):
+                                nombre_producto = list(productos_agricolas.keys())[int(opcion) - 1]
+                                cantidad = int(input(f"¿Cuántas unidades de {nombre_producto} deseas comprar? "))
+                                jugador.comprar_producto(nombre_producto, cantidad)
+                            else:
+                                print("Opción no válida. Introduce un número del 1 al M.")
+
+                    def mostrar_opciones_venta(productos_agricolas, jugador):
+                        while True:
+                            print("\n----- Venta de Productos -----")
+                            print("Productos disponibles para vender:")
+                            for i, (nombre, info_producto) in enumerate(productos_agricolas.items(), start=1):
+                                if info_producto.cantidad > 0:
+                                    print(f"{i}. {nombre} - Cantidad: {info_producto.cantidad} unidades")
+
+                            print("V. Volver al menú principal")
+                            opcion = input("Selecciona un producto para vender (1-V): ")
+
+                            if opcion == "V" or opcion == "v":
+                                break
+                            elif opcion.isdigit() and 1 <= int(opcion) <= len(productos_agricolas):
+                                nombre_producto = list(productos_agricolas.keys())[int(opcion) - 1]
+                                cantidad = int(input(f"¿Cuántas unidades de {nombre_producto} deseas vender? "))
+                                jugador.vender_producto(nombre_producto, cantidad)
+                            else:
+                                print("Opción no válida. Introduce un número del 1 al V.")
+
+                    def mostrar_opciones_mejoras(mejoras_granja, jugador):
+                        while True:
+                            print("\n----- Comprar Mejoras para la Granja -----")
+                            print("Mejoras disponibles:")
+                            for i, mejora in enumerate(mejoras_granja, start=1):
+                                if not mejora.comprada:
+                                    print(f"{i}. {mejora.nombre} - Precio: {mejora.costo} monedas")
+
+                            print("M. Volver al menú principal")
+                            opcion = input("Selecciona una mejora para comprar (1-M): ")
+
+                            if opcion == "M" or opcion == "m":
+                                break
+                            elif opcion.isdigit() and 1 <= int(opcion) <= len(mejoras_granja):
+                                nombre_mejora = mejoras_granja[int(opcion) - 1].nombre
+                                jugador.comprar_mejora(nombre_mejora)
+                            else:
+                                print("Opción no válida. Introduce un número del 1 al M.")
+
+                    def main():
+                        jugador = Jugador()
+
+                        while True:
+                            print("\n----- Granja de Jugador -----")
+                            print("1. Mostrar Inventario")
+                            print("2. Mercado de la Granja (Comprar Productos)")
+                            print("3. Venta de Productos")
+                            print("4. Comprar Mejoras para la Granja")
+                            print("5. Salir")
+
+                            opcion = input("Selecciona una opción (1-5): ")
+
+                            if opcion == "1":
+                                mostrar_inventario_jugador(jugador)
+                            elif opcion == "2":
+                                mostrar_opciones_mercado(jugador.productos_agricolas, jugador)
+                            elif opcion == "3":
+                                mostrar_opciones_venta(jugador.productos_agricolas, jugador)
+                            elif opcion == "4":
+                                mostrar_opciones_mejoras(jugador.mejoras_granja, jugador)
+                            elif opcion == "5":
+                                print("¡Gracias por jugar!")
+                                break
+                            else:
+                                print("Opción no válida. Introduce un número del 1 al 5.")
+
+                    if __name__ == "__main__":
+                        main()
 
                             
