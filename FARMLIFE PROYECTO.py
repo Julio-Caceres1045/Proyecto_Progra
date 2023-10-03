@@ -692,5 +692,20 @@ def login():
 
                     if __name__ == "__main__":
                         main()
+                elif opcion == '5':
+                    print("Saliendo...")
+                    time.sleep(1) 
+                    print("Saliendo...")
+                    time.sleep(1) 
+                    print("Saliendo...")
+                    time.sleep(1) 
+                    print("Gracias por jugar nuestro juego!")
 
+                    break
+                else:
+                    
+                    print("Opción no válida. Por favor, selecciona una opción válida.")
+                    # Iván Ordoñez carnet: 1567523
+                    #Julio Cáceres carnet: 1549223
+            break
                             
