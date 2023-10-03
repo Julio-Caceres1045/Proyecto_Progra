@@ -708,4 +708,29 @@ def login():
                     # Iván Ordoñez carnet: 1567523
                     #Julio Cáceres carnet: 1549223
             break
+        else:
+            print("Credenciales incorrectas. Intentos restantes:", intentos - 1)
+            intentos -= 1
+
+    if intentos == 0:
+        print("Has agotado tus intentos. Cierre de sesión.")
+
+if __name__ == "__main__":
+    print("Sistema de Registro e Inicio de Sesión")
+    while True:
+        print("\n1. Iniciar Sesión")
+        print("2. Registrarse")
+        print("3. Salir")
+        opcion = input("Seleccione una opción (1/2/3): ")
+
+        if opcion == "1":
+            login()
+        elif opcion == "2":
+            registrar_usuario()
+        elif opcion == "3":
+            print("¡Gracias por usar nuestro sistema!")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida (1/2/3).")
+
                             
