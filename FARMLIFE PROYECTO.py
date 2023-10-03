@@ -405,4 +405,109 @@ def login():
                                     if animal_seleccionado.salud <= 0:
                                         print(f"{animal_seleccionado.nombre} ha muerto.")
                                         animales.remove(animal_seleccionado)
+
+                elif opcion == '3':
+                    class JuegoCalendario:
+                            def __init__(self):
+                                self.hora = 7
+                                self.minuto = 0
+                                self.dia = 1
+
+                            def avanzar_tiempo(self, minutos_avance):
+                                self.minuto += minutos_avance
+
+                                if self.minuto >= 60:
+                                    self.hora += self.minuto // 60
+                                    self.minuto %= 60
+
+                                if self.hora >= 24:
+                                    self.dia += 1
+                                    self.hora %= 24
+
+                            def mostrar_tiempo(self):
+                                print(f"Día {self.dia}, Hora: {self.hora:02}:{self.minuto:02}")
+
+                            def planificar_actividades(self):
+                                while True:
+                                    self.mostrar_tiempo()
+                                    print("1. Trabajar")
+                                    print("2. Ver mi lista de avtividades")
+                                    print("3. Descansar")
+                                    print("4. Dormir")
+                                    print("5. Salir")
+                                    opcion = input("Elige una actividad: ")
+
+                                    if opcion == '1':
+                                        self.avanzar_tiempo(60) 
+                                    elif opcion == '2':
+                                        
+                                        actividades_pendientes = []
+
+                                        while True:
+                                    
+                                            print("----- Menú Principal -----")
+                                            print("1. Agregar actividad pendiente")
+                                            print("2. Ver actividades pendientes")
+                                            print("3. Realizar una actividad")
+                                            print("4. Salir")
+
+                                            
+                                            opcion = input("Selecciona una opción: ")
+
+                                    
+                                            if opcion == '1':
+                                                
+                                                actividad = input("Ingrese una nueva actividad pendiente: ")
+                                                actividades_pendientes.append(actividad)
+                                                print("Actividad agregada correctamente.")
+
+                                            elif opcion == '2':
+                                        
+                                                print("\n----- Actividades Pendientes -----")
+                                                for i, actividad in enumerate(actividades_pendientes, 1):
+                                                    print(f"{i}. {actividad}")
+                                                
+                                            elif opcion == '3':
+                                                
+                                                print("\n----- Realizar una Actividad -----")
+                                                if not actividades_pendientes:
+                                                    print("No hay actividades pendientes.")
+                                                else:
+                                                    print("Selecciona una actividad para marcar como realizada:")
+                                                    for i, actividad in enumerate(actividades_pendientes, 1):
+                                                        print(f"{i}. {actividad}")
+                                                    indice = input("Ingrese el número de la actividad realizada: ")
+                                                    if indice.isdigit():
+                                                        indice = int(indice)
+                                                        if 1 <= indice <= len(actividades_pendientes):
+                                                            actividad_realizada = actividades_pendientes.pop(indice - 1)
+                                                            print(f"Has realizado la siguiente actividad: {actividad_realizada}")
+                                                        else:
+                                                            print("Número de actividad no válido.")
+                                                    else:
+                                                        print("Entrada no válida. Ingrese un número válido.")
+
+                                            elif opcion == '4':
+                                                print("¡Gracias por usar la lista de actividades!")
+                                                break
+
+                                            else:
+                                                print("Opción no válida. Por favor, seleccione una opción válida del menú.")
+
+                                    elif opcion == '3':
+                                        self.avanzar_tiempo(30)
+                                        print("Descansaste")  
+                                    elif opcion == '4':
+                                        self.avanzar_tiempo(480)
+                                        print("Dormiste")  
+                                    elif opcion == '5':
+                                        print("¡Hasta luego!")
+                                        break
+                                    else:
+                                        print("Opción no válida. Introduce una opción válida.")
+
+                    if __name__ == "__main__":
+                        juego = JuegoCalendario()
+                        juego.planificar_actividades()
+
                             
